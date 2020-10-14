@@ -1,0 +1,73 @@
+<div class="content__inner">
+    <header class="content__title title-align">
+        <i class="zmdi zmdi-arrow-left zmdi-hc-3x" routerLink="/home"></i>
+        <h1 class="ml-2">{{ pageTitle }}</h1>
+    </header>
+
+    <div class="messages">
+        <div class="messages__sidebar">
+            <div class="recipient__heading mt-3">
+                <div class="bg-warning-lt text-center">
+                    <div class="form-group">
+                        <h6>Recipient list</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="listview listview--hover" *ngIf="messageRecipients">
+                <ng-scrollbar shown="hover" compact="true">
+                    <a *ngFor="let buddy of messageRecipients; let i = index" class="listview__item">
+                        <div class="pull-left">
+                            <label [for]="['todo-'+i]" *ngIf="buddy" 
+                            [ngClass]="['checkbox__char bg-'+getColor(i)]"> {{ buddy.FirstName? buddy.FirstName.charAt(0) : buddy.GivenName.charAt(0) }}</label>
+                        </div>
+                        <div class="listview__content alignment">
+                            <div class="listview__heading">{{ buddy.FirstName || buddy.GivenName}} {{ buddy.LastName || buddy.FamilyNameSurname}}</div>
+                        </div>
+                    </a>
+                </ng-scrollbar>
+            </div>
+        </div>
+
+        <div class="messages__body" *ngIf="messageDetails">
+            <div class="messages__header">
+                <div class="toolbar toolbar--inner mb-0">
+                    <h4>{{messageDetails.subject}}</h4>
+
+                    <div class="actions toolbar__actions">
+                        <div class="dropdown actions__item" dropdown>
+                            <i class="actions__item zmdi zmdi-more-vert" dropdownToggle></i>
+                            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                                <a class="dropdown-item" (click)="onDeleteMessage()" >Delete</a>
+                                <a routerLink="/home" class="dropdown-item">Close</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="toolbar__search" *ngIf="messagesSearch">
+                        <input type="text" placeholder="Search...">
+                        <i class="toolbar__search__close zmdi zmdi-long-arrow-left" (click)="messagesSearch = false"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="messages__content">
+                <ng-scrollbar shown="hover" compact="true">
+                    <div class="ng-star-inserted firstMessage">
+                        <!-- <img *ngIf="item.type == 'recieved'" [src]="['./assets/demo/img/profile-pics/'+messageContent.recipient.img]" class="avatar-img" alt="" /> -->
+
+                        <div  *ngIf="messageDetails">
+                            <div [froalaView]="messageDetails.message"></div>
+                            <!-- <p [innerHtml]="messageDetails.message"></p> -->
+                            <!-- <small><i class="zmdi zmdi-time"></i> {{ messageDetails.created | date:'dd/MM/yyyy h:mm a' }}</small> -->
+                        </div>
+                    </div>
+                </ng-scrollbar>
+            </div>
+
+            <div class="messages__reply">
+                <!-- <textarea class="messages__reply__text" placeholder="Type a message..."></textarea> -->
+            </div>
+        </div>
+    </div>
+</div>

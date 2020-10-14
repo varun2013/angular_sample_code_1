@@ -1,0 +1,61 @@
+<div class="project_paginate">
+  <nav class="" aria-label="Page navigation example" *ngIf="totalPages>1" style="display: block; margin: 0 auto;">
+    <ul class="pagination justify-content-center">
+      <li class="page-item pagination-first">
+        <a class="page-link" [ngClass]="currentPage === 0 ? 'iconDisabled' : ''" aria-label="Previous"
+          (click)="navigationBtn('prev')">
+          <i class="fa fa-step-backward"></i>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <li class="page-item pagination-prev">
+        <a class="page-link" [ngClass]="currentPage === 0 ? 'iconDisabled' : ''" (click)="goToPage(currentPage-1)">
+          <i class="fa fa-angle-left"></i></a>
+      </li>
+      <li class="page-item" [ngClass]="(currentPage == 0)?'active':''" (click)="goToPage(0)">
+        <a class="page-link" >{{1}}
+          <span class="sr-only">(current)</span></a>
+      </li>
+      <ng-container *ngIf="morePrevious && currentPage>2">
+        <li class="page-item">
+          <a class="page-link">
+            ...
+          </a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="pages.length">
+        <li class="page-item" *ngFor="let i of pages; let j='index'"  [ngClass]="(currentPage == i)?'active':''" >
+          <ng-container *ngIf="i>0">
+            <a class="page-link" (click)="goToPage(i)">{{i+1}}
+              <span class="sr-only">(current)</span></a>
+          </ng-container>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="morePages && currentPage<totalPages-3">
+        <li class="page-item">
+          <a class="page-link">
+            ...
+          </a>
+        </li>
+      </ng-container>
+      <li [ngClass]="{'page-item':true, 'active':(currentPage == totalPages-1)}">
+        <a class="page-link" (click)="goToPage(totalPages-1)">{{totalPages}}
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="page-item pagination-next">
+        <a class="page-link" [ngClass]="currentPage === totalPages -1 ? 'iconDisabled' : ''"
+          (click)="goToPage(currentPage+1)">
+          <i class="fa fa-angle-right"></i></a>
+      </li>
+      <li class="page-item pagination-last">
+        <a class="page-link" [ngClass]="currentPage === totalPages -1 ? 'iconDisabled' : ''"
+          (click)="navigationBtn('next')" aria-label="Next">
+          <!-- <span aria-hidden="true">&raquo;</span> -->
+          <i class="fa fa-step-forward"></i>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

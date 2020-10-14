@@ -1,0 +1,10 @@
+<div class="user">
+    <div class="" (click)="userMenu = !userMenu" [class.active]="userMenu">
+        <ng-container *ngIf="!centreLogo">
+            <img class="" src="./assets/demo/img/profile-pics/juniorlogo2.png" alt="">
+        </ng-container>
+        <ng-container *ngIf="centreLogo">
+            <img class="" [src]="redirectUrl+centreLogo" alt="">
+        </ng-container>
+    </div>
+</div>

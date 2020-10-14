@@ -1,0 +1,59 @@
+<!-- <ng-scrollbar shown="hover" compact="true"> -->
+<div class="sidebar_outer">
+    <sidebar-user [centreLogo]="centreLogo"></sidebar-user>
+
+    <ul class="navigation">
+        <li *ngFor="let menu of mainMenu; let i = index" [class.navigation__sub]="menu.sub"
+            routerLinkActive="navigation__active">
+            <!-- Router link for non sub menu  -->
+            <a *ngIf="!menu.sub" [href]="redirectUrl+menu.route" (click)="menu.sub && toggleSubMenu(i)">
+                <i [ngClass]="['zmdi zmdi-'+menu.icon]"></i> {{ menu.title }}
+            </a>
+            <!-- / -->
+
+            <!-- Menu toggle for sub menu -->
+            <a *ngIf="menu.sub" (click)="menu.sub && toggleSubMenu(i)">
+                <i [ngClass]="['zmdi zmdi-'+menu.icon]"></i> {{ menu.title }}
+                <ng-container *ngIf="menu.visibility == 'inactive'">
+                    <span class="icon-margin">
+                        <i class="zmdi zmdi-plus"></i>
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="menu.visibility !== 'inactive'">
+                    <span class="icon-margin">
+                        <i class="zmdi zmdi-minus"></i>
+                    </span>
+                </ng-container>
+            </a>
+            <!-- / -->
+
+            <ul *ngIf="menu.sub" [@toggleSubMenu]="menu.visibility">
+                <ng-container *ngIf="menu.title != 'Quick links'">
+                    <ng-template ngFor let-sub [ngForOf]="menu.sub" let-i="index" >
+                        <li routerLinkActive="navigation__active" *ngIf="sub.condition">
+                            <span class="quick-lick">
+                                <i class='zmdi zmdi-star' *ngIf="checkiflinkexist(sub)" (click)="removeQuickLink(sub)"></i>
+                                <i class='zmdi zmdi-star-outline' *ngIf="!checkiflinkexist(sub)" (click)="addQuickLink(sub)"></i>
+                            </span>
+                            <a [href]="redirectUrl+sub.link" class="capitalize sub">
+                                <!-- <ng-container> -->
+                                <!-- </ng-container> -->
+                                {{ sub.name }}
+                            </a>
+                        </li>
+                    </ng-template>
+                </ng-container>
+                <ng-container *ngIf="menu.title == 'Quick links'">
+                    <ng-template ngFor let-sub [ngForOf]="quickLinks" let-i="index" >
+                        <li routerLinkActive="navigation__active">
+                            <a [href]="redirectUrl+sub.link" class="capitalize sub">
+                                {{ sub.name }}
+                            </a>
+                        </li>
+                    </ng-template>
+                </ng-container>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- </ng-scrollbar> -->

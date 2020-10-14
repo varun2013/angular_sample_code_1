@@ -1,0 +1,99 @@
+
+<ul class="header-inner">
+    <li class="pull-left">
+        <ul class="top-menu">
+            <li class="logo hidden-xs dropdown" dropdown>
+                <a dropdownToggle style="background-position: 10px 50%;padding-left: 33px;" class="tm-chat">
+                    {{headerTitle}}  <span class="caret"></span>
+                </a>
+                <div *dropdownMenu class="dropdown-menu multi-level" role="menu">
+                    <li *ngIf="checkRole('REGION_ADMIN_ROLE')"><a (click)="navigateTo('#/main/centres')">View Centres</a></li>
+                    <li *ngIf="checkRole('SYSTEM_ADMIN_ROLE')"><a (click)="navigateTo('#/main/organisations')">View Organisations</a></li>
+                    <li *ngIf="checkRole('COMPANY_ADMIN_ROLE')"><a (click)="navigateTo('#/main/regions')">View Regions</a></li>
+                    <li *ngIf="checkRole('REGION_ADMIN_ROLE')" class="divider"></li>
+                    <li><a [href]="redirectUrl+'#/main/formly/edit/facility/'+user.facility._id">Current Centre: {{user.facility.name}}</a></li>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li class="pull-right">
+        <ul class="top-menu">
+            <li id="toggle-width">
+                <div class="toggle-switch">
+                    <input id="tw-switch" type="checkbox" hidden="hidden" data-change-layout="mactrl.layoutType">
+                    <label for="tw-switch" class="ts-helper"></label>
+                </div>
+            </li>
+            <li class="dropdown user-meanu">
+               <a [href]="redirectUrl+'#/main/actioncentre'"><i class="zmdi zmdi-notifications-active zmdi-hc-1x"></i></a>
+            </li>
+            <li class="dropdown user-meanu" dropdown>
+               <a  dropdownToggle class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+               <i style="top: -1px;font-size: 26px;position: relative;" class="zmdi zmdi-help-outline zmdi-hc-1x"></i>
+               </a>
+               <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                  <li class="p-1">
+                    <a>HELP GUIDE</a>
+                  </li>
+                  <li class="p-1">
+                    <a>FAQ</a>
+                  </li>
+                  <li class="p-1">
+                    <a>LOG A TICKET</a>
+                  </li>
+               </ul>
+            </li>
+            <li class="dropdown user-meanu" dropdown>
+               <a  dropdownToggle class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+               <i class="zmdi zmdi-more-vert zmdi-hc-2x"></i>
+                <span class="hide-mobile ng-binding" *ngIf="user && user.firstname && user.lastname">&nbsp;&nbsp;{{user.firstname}} {{user.lastname}}</span>
+               </a>
+               <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+                  <li>
+                     <a [href]="redirectUrl+'#/main/formly/edit/administrator/'+user._id"><i class="zmdi zmdi-account"></i> Edit Profile</a>
+                  </li>
+                  <li>
+                     <a (click) = "onLogout()"><i class="zmdi zmdi-time-restore"></i> Logout</a>
+                  </li>
+               </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+
+
+<!-- <li ng-if="hctrl.currentUser" class="pull-right">
+    <ul class="top-menu">
+        <li id="toggle-width">
+            <div class="toggle-switch">
+                <input id="tw-switch" type="checkbox" hidden="hidden" data-change-layout="mactrl.layoutType">
+                <label for="tw-switch" class="ts-helper"></label>
+            </div>
+        </li>
+        <li class="dropdown user-meanu">
+           <a   class="dropdown-toggle"><i class="zmdi zmdi-notifications-active zmdi-hc-1x"></i></a>
+        </li>
+        <li  class="dropdown user-meanu" dropdown="" style="">
+           <a  dropdown-toggle="" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+           <i style="top: 3px;font-size: 26px;" class="zmdi zmdi-help-outline zmdi-hc-1x"></i>
+           </a>
+           <ul class="dropdown-menu dropdown-menu-right">
+              <li>
+                 <a>Help Guide</a>
+                 <a  target="_blank" > Help Guide </a>
+              </li>
+              <li>
+                 <a>FAQ</a>
+                 <a  target="_blank" >FAQ </a>
+              </li>
+              <li>
+                 <a>Log a Ticket</a>
+                 <a  target="_blank"  >Log a Ticket </a>
+              </li>
+           </ul>
+        </li>
+        
+       
+    </ul>
+</li> -->

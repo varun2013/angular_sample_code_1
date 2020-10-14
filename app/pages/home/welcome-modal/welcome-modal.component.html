@@ -1,0 +1,54 @@
+<div class="cus_modal" >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Welcome to Juniorlogs SMS Services</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <p>Using our bulk SMS service, your centre can send a single text message, broadcast to a select group of parents, teachers or entire contacts list.</p>
+    </div>
+    <div>
+      <p>Bulk SMS messaging is popular, in part, because of its reliability of delivery and possibilities of saving lot of admin time.</p>
+    </div>
+    <div>
+      <h4 class="modal-title pull-left">It can be used for :</h4>
+      <ul>
+        <li>Emergency messaging</li>
+        <li>Event notifications</li>
+        <li>Payment reminders</li>
+        <li>Staff rostering</li>
+        <li>Many other applications</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="modal-title">
+        Usage costs:
+      </h4>
+      <div>
+        <p>
+          note that this is a paid service and your centre will incur <span style="font-weight: 500;">15 cents per text (SMS).</span> 
+          We request you to read and accept our terms of service and select checkbox 
+          below if you would like to activate this service.
+        </p>
+      </div>
+    </div>
+    <div class="agreement-div">
+      <div class="checkbox_wrap" (click)="$event.stopPropagation()">
+        <div class="check_in ml-2">
+          <input type="checkbox" name="agree" [(ngModel)]="agree" [ngModelOptions]="{standalone: true}">
+          <label for="agree"></label>
+        </div>
+        <div>
+          <div>
+            <p>Please activate SMS services, I accept <a (click)="goToLink('https://www.juniorlogs.co.nz/terms-of-services-for-text-messaging/')" href="javascript:void(0)">terms of services.</a> </p> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="agreement-div">
+      <button class="btn btn-primary btn-green" (click) = "onActivate()">Activate</button>
+    </div>
+  </div>
+</div>

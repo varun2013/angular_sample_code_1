@@ -1,0 +1,41 @@
+<div class="listview" *ngIf="messageList && messageList.length">
+  <div *ngFor="let list of messageList ; let i = index" class="listview__item" (dblclick)="onDoubleClick(list)">
+    <div class="checkbox checkbox--char todo__item listview__heading_width" >
+      <!-- <label [for]="['todo-'+i]" [ngClass]="['checkbox__char bg-'+list.color]">{{ list.cap }}</label> -->
+      <label [for]="['todo-'+i]"
+        [ngClass]="['checkbox__char bg-'+getColor(i)]" *ngIf="list.sender">{{ list.sender.firstname.charAt(0) }}</label>
+
+      <div class="listview__content">
+        <div class="listview__heading ">{{ list.subject }}</div>
+        <!-- <p>{{ list.date }}</p> -->
+      </div>
+
+      <div class="listview__attrs">
+        <span *ngFor="let category of list.categories"> {{category.name}} </span>
+        <span *ngFor="let label of list.labels"> {{label.name}} </span>
+      </div>
+    </div>
+
+    <div class="actions listview__actions message_options">
+      <div>
+        <i class="zmdi zmdi-time"></i>
+        <span> {{list.created | date:'dd/MM/yyyy h:mm a'}}</span>
+      </div>
+      <!-- <div>
+        <i class="zmdi zmdi-comments"></i>
+        <span class="ml-2">04</span>
+      </div> -->
+      <div class="dropdown actions__item" dropdown>
+        <i class="zmdi zmdi-more-vert" dropdownToggle></i>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+          <a [routerLink]="['/messages',list._id]" class="dropdown-item"> Open </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-paginator [totalPages]="totalPages" [currentPage]="currentPage" (recieveValues)="onRecieveValues($event)"></app-paginator>
+</div>
+<div class="listview text-center" *ngIf="!messageList.length">
+  <i class="zmdi zmdi-email zmdi-hc-4x"></i>
+  <p class="">No messages found</p>
+</div>

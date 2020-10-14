@@ -1,0 +1,78 @@
+<div class="row todo">
+    <div class="col-md-8">
+        <form [formGroup]="settingForm"  name="settingForm">
+            <div class="form-group mb-0">
+                <p class="bg-blue  mb-0">Header settings</p>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <textarea [froalaEditor]="headerOptions" id="froala-editor1"  [(froalaModel)]="headerData" ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-0">
+                <p class="bg-blue  mb-0">Footer settings</p>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <textarea [froalaEditor]="footerOptions" id="froala-editor2" [(froalaModel)]="footerData" ></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <tabset class="custom-tab" #staticTabs>
+            <tab heading="Tags" customClass="customClass" >
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Tags</h4>
+                        <div class="tags" *ngIf="labelData.length">
+                            
+                            <a *ngFor="let label of labelData" >
+                                #{{ label.name }}
+                                <i class="zmdi zmdi-close" (click)="onRemoveLabel(label._id)"></i>
+                            </a>
+                        </div>
+                        <form [formGroup]="labelForm"  name="labelform">
+                            <div class="form-group mt-5">
+                                <input type="text" class="form-control" placeholder="New Label" formControlName="newLabel">
+                                <div *ngIf="labelFormSubmitted && f.newLabel.errors">
+                                  <div *ngIf="f.newLabel.errors.required" class="danger">Label is required</div>
+                                </div>
+                            </div>
+                            <a  class="btn btn-primary " type="submit" (click)="onCreateLabel()" >Create Label</a>
+                        </form>
+                    </div>
+                </div>
+            </tab>
+            <tab heading="Categories" >
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Categories</h4>
+                        <div class="tags" *ngIf="categoryData.length">
+                            <a *ngFor="let category of categoryData" >
+                                #{{ category.name }}
+                                <i class="zmdi zmdi-close" (click)="onRemoveCategory(category._id)"></i>
+                            </a>
+                        </div>
+                        <div class="form-group mt-5">
+                            <form [formGroup]="categoryForm"  name="categoryform"> 
+                                <div class="form-group mt-5">
+                                    <input type="text" class="form-control" placeholder="New Category" formControlName="newCategory">
+                                    <div *ngIf="categoryFormSubmitted && c.newCategory.errors">
+                                      <div *ngIf="c.newCategory.errors.required" class="danger">Category is required</div>
+                                    </div>
+                                </div>
+                                <a  class="btn btn-primary " type="submit" (click)="onCreateCategory()" >Create Category</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+</div>

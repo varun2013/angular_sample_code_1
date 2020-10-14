@@ -1,0 +1,116 @@
+<div class="login">
+
+    <!-- Login -->
+    <div *ngIf="loginStats.login" class="login__block active">
+        <div class="login__header bg-green">
+            <i class="zmdi zmdi-account-circle"></i>
+            Hi there! Please Sign in
+
+            <div class="actions actions--inverse login__actions">
+                <div class="dropdown" dropdown>
+                    <i dropdownToggle class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                        <a class="dropdown-item" (click)="toggleBlock('login', 'signUp')">Create an account</a>
+                        <a class="dropdown-item" (click)="toggleBlock('login', 'forgotPassword')">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login__body">
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control" InputFloat>
+                <label>Email Address</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="password" class="form-control" InputFloat>
+                <label>Password</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <a [routerLink]="['/home']" class="btn btn--icon bg-green"><i class="zmdi zmdi-long-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Register -->
+    <div *ngIf="loginStats.signUp" class="login__block">
+        <div class="login__header bg-blue">
+            <i class="zmdi zmdi-account-circle"></i>
+            Create an account
+
+            <div class="actions actions--inverse login__actions">
+                <div class="dropdown" dropdown>
+                    <i dropdownToggle class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                        <a class="dropdown-item" (click)="toggleBlock('signUp', 'login')">Already have an account?</a>
+                        <a class="dropdown-item" (click)="toggleBlock('signUp', 'forgotPassword')">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login__body">
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control" InputFloat>
+                <label>Name</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control" InputFloat>
+                <label>Email Address</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="password" class="form-control" InputFloat>
+                <label>Password</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <div class="form-group" style="display: inline-block">
+                <div class="checkbox">
+                    <input type="checkbox" id="agreement">
+                    <label class="checkbox__label" for="agreement">I have read and accept agreement</label>
+                </div>
+            </div>
+
+            <button [routerLink]="['/']" class="btn btn--icon bg-blue"><i class="zmdi zmdi-check"></i></button>
+        </div>
+    </div>
+
+    <!-- Forgot Password -->
+    <div *ngIf="loginStats.forgotPassword" class="login__block">
+        <div class="login__header bg-red">
+            <i class="zmdi zmdi-account-circle"></i>
+            Forgot Password?
+
+            <div class="actions actions--inverse login__actions">
+                <div class="dropdown" dropdown>
+                    <i dropdownToggle class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+                        <a class="dropdown-item" (click)="toggleBlock('forgotPassword', 'login')">Already have an account?</a>
+                        <a class="dropdown-item" (click)="toggleBlock('forgotPassword', 'signUp')">Create an account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login__body">
+            <p class="mt-4">Lorem ipsum dolor fringilla enim feugiat commodo sed ac lacus.</p>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control" InputFloat>
+                <label>Email Address</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <button [routerLink]="['/']" class="btn btn--icon bg-red"><i class="zmdi zmdi-check"></i></button>
+        </div>
+    </div>
+</div>

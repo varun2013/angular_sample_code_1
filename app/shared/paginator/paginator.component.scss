@@ -1,0 +1,12 @@
+.page-link {
+    border-radius: 50% !important;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    z-index: 1;
+    cursor: pointer;
+    transition: background-color 300ms, color 300ms;
+    margin: 0 1px;
+    font-size: 15px;
+}

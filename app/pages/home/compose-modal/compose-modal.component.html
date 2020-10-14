@@ -1,0 +1,317 @@
+<div class="cus_modal" *ngIf="showComposeHtml && !showSenderList">
+  <div class="modal-header">
+    <ng-container *ngIf="type=='email'">
+      <h4 class="modal-title pull-left">New email message</h4>
+    </ng-container>
+    <ng-container *ngIf="type=='sms'">
+      <h4 class="modal-title pull-left">New SMS message</h4>
+    </ng-container>
+    <div class="select-type">
+      <span>Select</span>
+        <a dropdown>
+          <i class="zmdi zmdi-label-alt-outline zmdi-hc-lg" dropdownToggle></i>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+            <ng-template ngFor let-label [ngForOf]="labels">
+              <div class="checkbox_wrap" (click)="$event.stopPropagation()">
+                <div class="check_in ml-2">
+                  <input type="checkbox" name="fordCheckBox" value="Ford" (change)="onSelectLabels(label._id)" [checked]="isLabelSelected(label._id)">
+                  <label for="fordCheckBox"></label>
+                </div>
+                <div class="check_content" (click)="onSelectLabels(label._id)"> 
+                  <div class="child_detail">
+                    {{label.name}}
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </a>
+        <a dropdown>
+          <i class="zmdi zmdi-book zmdi-hc-lg" dropdownToggle></i>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+            <ng-template ngFor let-category [ngForOf]="categories">
+              <div class="checkbox_wrap" (click)="$event.stopPropagation()">
+                <div class="check_in ml-2">
+                  <input type="checkbox" name="fordCheckBox" value="Ford" (change)="onSelectCategory(category._id)" [checked]="isCategorySelected(category._id)">
+                  <label for="fordCheckBox"></label>
+                </div>
+                <div class="check_content" (click)="onSelectCategory(category._id)"> 
+                  <div class="child_detail">
+                    {{category.name}}
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </a>
+    </div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="emailForm" (ngSubmit)="displayModal(true, false)">
+      <div class="form-group">
+        <input type="text" class="form-control" id="subject" aria-describedby="emailHelp" placeholder="Enter subject"
+          formControlName="subject">
+        <div *ngIf="submitted && f.subject.errors">
+          <div *ngIf="f.subject.errors.required" class="danger">Subject is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea [froalaEditor]='options' formControlName="message" ></textarea>
+        <!-- <ckeditor [editor]="Editor" id="editor"  [config]="editorConfig" formControlName="message">
+        </ckeditor> -->
+        <!-- <ckeditor [editor]="Editor" data="<p>Hello, world!</p>" formControlName="message" (ready)="onReady($event)"></ckeditor> -->
+        <div *ngIf="submitted && f.message.errors">
+          <div *ngIf="f.message.errors.required" class="danger">Message is required</div>
+        </div>
+      </div>
+      <div class="form-group mb-0" *ngIf="type=='email'">
+        <div class="btm-send-file">
+          <a class="btn-link" (click)="openModal(template)">Send as test email</a>
+          <!-- <div class="file_wrap">
+            <input type="file" name="file" id="file" class="inputfile" />
+            <label for="file"><i class="zmdi zmdi-file-text"></i> Choose From Template</label>
+          </div> -->
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_grp">
+      <a class="btn btn-info" (click)="onSaveDraft()" *ngIf="type=='email'">Save as draft</a>
+      <a class="btn btn-info" (click)="displayModal(true, false)">Next</a>
+    </div>
+  </div>
+</div>
+
+<div class="cus_modal" *ngIf="!showComposeHtml && showSenderList">
+  <div class="modal-body">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="back_btn" (click)="displayModal(false, true)">
+      <i class="zmdi zmdi-long-arrow-left"></i>
+      <span>Select</span>
+    </div>
+    <tabset class="custom-tab2">
+      <tab heading="Children" customClass="customClass">
+        <form>
+          <div class="form-row">
+            <div class="col-4">
+              <input type="text" class="form-control" placeholder="Search Children" [(ngModel)]="childName"
+                name="childName" (input)="onRoomChange()">
+            </div>
+            <div class="col-4" *ngIf="centerType != 'Home Based'">
+              <div class="appearance">
+                <select id="inputState" class="form-control" [(ngModel)]="selectedRoom" name="room"
+                  (change)="onRoomChange()">
+                  <option selected value="">All Rooms</option>
+                  <option *ngFor="let room of rooms" [value]="room._id">{{room.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-4" *ngIf="centerType == 'Home Based'">
+              <div class="appearance">
+                <select  class="form-control" [(ngModel)]="selectedEducator" name="educator"
+                  (change)="onEducatorChange()">
+                  <option selected value="undefined">All educators</option>
+                  <option *ngFor="let staff of staffList" [value]="staff._id">{{staff.FirstName?staff.FirstName:''}}  {{staff.LastName?staff.LastName:''}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="appearance" dropdown>
+                <div  class="select-dd" dropdownToggle>
+                  <a>Select contact types</a>
+                  <div *dropdownMenu class="dropdown-menu dropdown-menu-center full-width">
+                      <div class="checkbox_wrap" (click)="$event.stopPropagation()">
+                        <div class="check_in ml-2">
+                          <input type="checkbox" name="fordCheckBox" value="Ford" (change)="onSelectContactType('Parent')">
+                          <label for="fordCheckBox"></label>
+                        </div>
+                        <div class="check_content"> 
+                          <div class="child_detail">
+                            Parents
+                          </div>
+                        </div>
+                      </div>
+                      <div class="checkbox_wrap" (click)="$event.stopPropagation()" >
+                        <div class="check_in ml-2">
+                          <input type="checkbox" name="fordCheckBox" value="Ford" (change)="onSelectContactType('Emergency')">
+                          <label for="fordCheckBox"></label>
+                        </div>
+                        <div class="check_content"> 
+                          <div class="child_detail">
+                            Emergency contacts
+                          </div>
+                        </div>
+                      </div>
+                      <div class="checkbox_wrap" (click)="$event.stopPropagation()" >
+                        <div class="check_in ml-2">
+                          <input type="checkbox" name="fordCheckBox" value="Ford" (change)="onSelectContactType('Additional')">
+                          <label for="fordCheckBox"></label>
+                        </div>
+                        <div class="check_content"> 
+                          <div class="child_detail">
+                            Additional contacts
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="appearance">
+                <select id="contacts" class="form-control" [(ngModel)]="selectedContactType" name="contacts"
+                (change)="onSelectContactType()">
+                  <option selected value="">All contacts</option>
+                  <option value="Parent"> Parent </option>
+                  <option value="Emergency"> Emergency contacts </option>
+                  <option value="Additional"> Additional contacts </option>
+                </select>
+              </div> -->
+            </div>
+          </div>
+          <div class="detail_outer scroll-listing">
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="checkbox_wrap">
+                  <div class="check_in">
+                    <input type="checkbox" [(ngModel)]="selectAllChildren" (change)="onSelectAllChildren(selectAllChildren)" [ngModelOptions]="{standalone: true}">
+                    <label for="fordCheckBox"></label>
+                  </div>
+                  <div class="check_content">
+                    <div class="child_detail">
+                      <h6>Select All</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 text-right">
+                {{selectedChildrenCount}} contacts selected
+              </div>
+            </div>
+            <div class="form-row">
+              <ng-container *ngIf="childrenList.length">
+                <ng-template ngFor let-child [ngForOf]="childrenList">
+                  <div class="col-4">
+                    <div class="checkbox_wrap">
+                      <div class="check_in">
+                        <input type="checkbox" name="fordCheckBox" value="Ford"
+                          (change)="addRecipients(child,'children')" [checked]="isChecked(child,'children')">
+                        <label for="fordCheckBox"></label>
+                      </div>
+                      <div class="check_content">
+                        <img class="child_img" *ngIf="child.Profile" [src]="child.Profile">
+                        <div class="child_img" *ngIf="!child.Profile" [ngStyle]="{'background-image': 'url(\'./assets/img/user_empty.png\')'}"></div>
+                        <div class="child_detail">
+                          <h6>{{child.OfficialGiven1Name}} {{child.OfficialFamilyName}}</h6>
+                          <!-- <ng-container *ngIf="checkEmail(child)">
+                            <p>No Email</p>
+                          </ng-container> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </div>
+          </div>
+        </form>
+      </tab>
+      <tab heading="Staff">
+        <form>
+          <div class="form-row">
+            <div class="col-4">
+              <input type="text" class="form-control" placeholder="Search Staff" [(ngModel)]="staffName"
+                name="fordCheckBox" value="Ford" (input)="getStaff()">
+            </div>
+            <div class="col-4">
+              <div class="appearance">
+                <select id="inputState" class="form-control" [(ngModel)]="selectedRoomStaff" name="room"
+                  (change)="onRoomChangeStaff()">
+                  <option selected value="">All Rooms</option>
+                  <option *ngFor="let room of rooms" [value]="room._id">{{room.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="detail_outer scroll-listing">
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="checkbox_wrap">
+                  <div class="check_in">
+                    <input type="checkbox" [(ngModel)]="selectAllStaff" (change)="onSelectAllStaff(selectAllStaff)" [ngModelOptions]="{standalone: true}">
+                    <label for="fordCheckBox"></label>
+                  </div>
+                  <div class="check_content">
+                    <div class="child_detail">
+                      <h6>Select All</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 text-right">
+                {{selectedStaffCount}} staff selected
+              </div>
+            </div>
+            <div class="form-row">
+              <ng-template ngFor let-staff [ngForOf]="staffList">
+                <div class="col-4">
+                  <div class="checkbox_wrap">
+                    <div class="check_in">
+                      <input type="checkbox" (change)="addRecipients(staff,'staff')"
+                        [checked]="isChecked(staff,'staff')">
+                      <label for="fordCheckBox"></label>
+                    </div>
+                    <div class="check_content">
+                      <img class="child_img" *ngIf="staff.Profile" [src]="getProfileImage(staff.Profile)">
+                      <div class="child_img" *ngIf="!staff.Profile" [ngStyle]="{'background-image': 'url(\'./assets/img/user_empty.png\')'}">
+                      </div>
+                      <div class="child_detail">
+                        <h6>{{staff.FirstName}} {{staff.LastName}}</h6>
+                        <p *ngIf="!staff.Email && type=='email'">No Email</p>
+                        <p *ngIf="!staff.PhoneNumber && type=='sms'">No Contact Number</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </form>
+      </tab>
+    </tabset>
+  </div>
+  <div class="modal-footer">
+    <div class="btn_grp">
+      <a class="btn btn-info" (click)="onSendEmail()">Send message</a>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="cus_modal bg-light">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Enter email</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Enter Email" [(ngModel)]="testEmail" name="testEmail">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="btn_grp">
+        <a class="btn btn-info" (click)="onSendTestEmail()">Send message</a>
+      </div>
+    </div>
+  </div>
+</ng-template>

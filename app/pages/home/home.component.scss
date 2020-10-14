@@ -1,0 +1,43 @@
+.search_wrap {
+    position: absolute;
+    top: 30px;
+    left: 100%;
+    right: 44px;
+    z-index: 99;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.1);
+    transition: 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    &.showSearch{
+        left: 43%;
+        opacity: 1;
+        visibility: visible;
+    }
+    input[type="text"]{
+        width: 100%;
+        border: 1px solid #eeeeee;
+        padding: 12px 10px 12px 40px;
+        background: #ffffff url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 13px center;
+    }
+}
+
+.compose-btn {
+    border-radius: 2px;
+    background-color: #4caf50;
+   
+}
+
+.close-search{
+    position: absolute;
+    right: 10px;
+    top: 17px;
+    cursor: pointer;
+}
+
+.align-btn {
+    text-align: right;
+    position: absolute;
+    top: -35px;
+    right: 82px;
+}
+

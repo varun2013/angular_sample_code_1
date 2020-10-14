@@ -1,0 +1,106 @@
+<div class="content__inner">
+  <header class="content__title">
+    <h1>Message Centre</h1>
+  </header>
+  <div class="card">
+    <div class="row">
+      <div class="col-md-8">
+      </div>
+      <div class="col-md-4 align-btn">
+        <div class="dropdown actions__item" dropdown>
+          <button class="btn btn-success pull-right compose-btn" dropdownToggle>
+            Compose
+          </button>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu">
+            <a class="dropdown-item" (click)="openModal('email')"> <i class="zmdi zmdi-email mr-1"></i> New EMAIL</a>
+            <ng-container *ngIf="!textMessage">
+              <a class="dropdown-item" (click)="openWelcomeModal()" > <i class="zmdi zmdi-email mr-1"></i> New SMS</a>
+            </ng-container>
+            <ng-container *ngIf="textMessage">
+              <a class="dropdown-item" (click)="openModal('sms')" > <i class="zmdi zmdi-email mr-1"></i> New SMS</a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- <div class="right_menu_plus">
+        <div class="dropdown actions__item" dropdown>
+          <i class="zmdi zmdi-plus" dropdownToggle></i>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" (click)="openModal(template)"> <i class="zmdi zmdi-email mr-1"></i> New EMAIL</a>
+            <a class="dropdown-item"> <i class="zmdi zmdi-email mr-1"></i> New SMS</a>
+          </div>
+        </div>
+
+      </div> -->
+      <div class="right_menu">
+        <i class="zmdi zmdi-search zmdi-hc-lg" (click)="changeSearchView(true)"></i>
+        <div dropdown>
+          <i class="zmdi zmdi-label-alt-outline zmdi-hc-lg" dropdownToggle></i>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+            <ng-template ngFor let-label [ngForOf]="labels">
+              <div class="checkbox_wrap" (click)="$event.stopPropagation()">
+                <div class="check_in ml-2">
+                  <input type="checkbox" name="fordCheckBox" value="Ford" (change)="onSelectLabels(label._id)" [checked]="isLabelSelected(label._id)">
+                  <label for="fordCheckBox"></label>
+                </div>
+                <div class="check_content" (click)="onSelectLabels(label._id)">
+                  <div class="child_detail">
+                    {{label.name}}
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div dropdown>
+          <i class="zmdi zmdi-book zmdi-hc-lg" dropdownToggle></i>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+            <ng-template ngFor let-category [ngForOf]="categories">
+              <div class="checkbox_wrap" (click)="$event.stopPropagation()">
+                <div class="check_in ml-2">
+                  <input type="checkbox" name="fordCheckBox" value="Ford" (change)="onSelectCategory(category._id)" [checked]="isCategorySelected(category._id)">
+                  <label for="fordCheckBox"></label>
+                </div>
+                <div class="check_content" (click)="onSelectCategory(category._id)">
+                  <div class="child_detail">
+                    {{category.name}}
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div dropdown>
+          <i class="zmdi zmdi-sort-amount-desc zmdi-hc-lg" dropdownToggle></i>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" (click)="sortBy({'created':-1})"> Newest first</a>
+            <a class="dropdown-item" (click)="sortBy({'created':+1})"> Oldest</a>
+          </div>
+        </div>
+        <!-- <i class="zmdi zmdi-settings zmdi-hc-lg" (click)="addNewTab()"></i> -->
+      </div>
+      <div class="search_wrap" [ngClass]="{'showSearch': showSearch}">
+        <i class="zmdi zmdi-close zmdi-hc-lg close-search" (click)="changeSearchView(false)"></i>
+        <form id="demo-2">
+          <input type="text" placeholder="Search for Message" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+        </form>
+      </div>
+      <tabset class="custom-tab" #staticTabs>
+        <tab heading="Messages" customClass="customClass" (select)="onSelectTab('message')">
+          <app-message-listing #messageListing [sortByOrder]="sortByOrder" [selectedTab]="selectedTab" [search]="search">
+          </app-message-listing>
+        </tab>
+        <tab heading="Draft" (select)="onSelectTab('draft')">
+          <app-draft-listing #draftListing [sortByOrder]="sortByOrder" [selectedTab]="selectedTab" [search]="search"></app-draft-listing>
+        </tab>
+        <tab heading="Settings">
+          <app-settings></app-settings>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+
+</div>
