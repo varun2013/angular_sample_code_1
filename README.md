@@ -1,3 +1,9 @@
+## specification
+
+module is build on Angular 7.X
+
+## Module functionalities
+
 This code is of the message center. In this code, the user can compose SMS or email and can send it to an email id / phone number.
 We have the option to create a setting for the header and footer of the email.
  
